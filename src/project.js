@@ -2,7 +2,6 @@ import Task from "./task.js"
 
 export default class Project{
     tasks = []
-    completed = []
     constructor(name){
         this.name = name;
     }

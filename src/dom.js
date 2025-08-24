@@ -1,7 +1,14 @@
 import "./styles/DOM.css"
+import { makeProject, makeToDo } from "./appLogic.js";
 import Project from "./project.js";
+
 function Dom(title){
     let apptitle = title;
+//create forms
+    // const createFormforProject = () => {
+    //     let form = document.createElement('form');
+    //     form.className = "projectForm";
+    // }
 
     const createParent =() => {
         let parent = document.createElement('div');
@@ -10,9 +17,17 @@ function Dom(title){
         return parent;
     }
 
-    const createProject = (Sidediv, maindiv) => {
+    const createTask = (title, description, duedate, priority, maindiv) => {
+        let task = makeToDo(title, description, duedate, priority);
+        let todo = document.createElement('div');
+        todo.className = "todo";
+        //set inner things
+        maindiv.appendChild(todo);
+    }
+
+    const createProject = (Sidediv) => {
         //create form and take name
-        let project = new Project("Some")
+        let project = makeProject("P1");
         let projectDiv = document.createElement('div');
         projectDiv.className = "projectDiv";
         projectDiv.textContent = project.Name;
@@ -23,7 +38,8 @@ function Dom(title){
             let taskbutton = document.querySelector('.task-button');
             taskbutton.addEventListener('click', function(){
                 //create task form
-                //create Task function
+                let maindiv = document.querySelector('.taskdiv');
+                createTask("Temp", "temp", "temp", "temp", maindiv);
             })
 
         })
@@ -69,9 +85,9 @@ function Dom(title){
         addProjectButton.className = "addProjButton";
         addProjectButton.textContent = "New Project";
         div.appendChild(addProjectButton);
-        let maindiv = document.querySelector('.taskdiv');
+        
         addProjectButton.addEventListener("click", function(){
-            createProject(div, maindiv)
+            createProject(div)
         });
     }
 
@@ -80,6 +96,7 @@ function Dom(title){
     
 
     const MainFactory = () => {
+    
         let parent = createParent();
         let sidebar = createSideBar(parent, apptitle);
         let main = createMainBar(parent);

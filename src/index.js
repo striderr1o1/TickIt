@@ -1,5 +1,5 @@
 import dom from "./dom.js"
 
-let domm = dom("TickIT");
+let domm = dom("Dont TickIT");
 domm.MainFactory();
 
