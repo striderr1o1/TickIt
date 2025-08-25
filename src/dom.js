@@ -5,29 +5,34 @@ import Project from "./project.js";
 function Dom(title){
     let apptitle = title;
 //create forms
-    // const createFormforProject = () => {
-    //     let form = document.createElement('form');
-    //     form.className = "projectForm";
-    // }
+    const StartProject = (parent, sidediv) => {
+        let form = document.createElement('form');
+        form.className = "projectForm";
+        parent.appendChild(form);
 
-    const createParent =() => {
-        let parent = document.createElement('div');
-        parent.className = "parentDiv";
-        document.body.appendChild(parent);
-        return parent;
+        let label = document.createElement('label');
+        label.textContent = "Name: ";
+        let input = document.createElement('input');
+        input.type = "text";
+        form.appendChild(label);
+        label.appendChild(input);
+
+        let submitButton = document.createElement('button');
+        submitButton.className = "prjSubmButton";
+        form.appendChild(submitButton);
+        submitButton.textContent = "ok";
+        submitButton.addEventListener('click', function(event){
+            event.preventDefault();
+            form.style.display = "none";
+            let inputValue = input.value;
+            // console.log(inputValue);
+            startProject2(inputValue, sidediv);
+            
+            
+        })
     }
-
-    const createTask = (title, description, duedate, priority, maindiv) => {
-        let task = makeToDo(title, description, duedate, priority);
-        let todo = document.createElement('div');
-        todo.className = "todo";
-        //set inner things
-        maindiv.appendChild(todo);
-    }
-
-    const createProject = (Sidediv) => {
-        //create form and take name
-        let project = makeProject("P1");
+    const startProject2 = (name, Sidediv) => {
+        let project = makeProject(name);
         let projectDiv = document.createElement('div');
         projectDiv.className = "projectDiv";
         projectDiv.textContent = project.Name;
@@ -43,6 +48,29 @@ function Dom(title){
             })
 
         })
+    }
+
+    const createParent =() => {
+        let parent = document.createElement('div');
+        parent.className = "parentDiv";
+        document.body.appendChild(parent);
+        return parent;
+    }
+
+    const createTask = (title, description, duedate, priority, maindiv) => {
+        let task = makeToDo(title, description, duedate, priority);
+        let todo = document.createElement('div');
+        todo.className = "todo";
+        //set inner things
+        maindiv.appendChild(todo);
+    }
+//STARTING HERE
+    const createProject = (Sidediv) => {
+        //create form for project
+        let parentDiv = document.querySelector('.parentDiv');
+        StartProject(parentDiv, Sidediv);
+        
+        
 
 
     }
