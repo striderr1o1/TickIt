@@ -309,4 +309,4 @@ function Dom(title, app){
 
 export default Dom;
 
-//need to make functionality of creating new projects and also seperate app logic from dom
+//need to add delete, complete, prioritize, local storage etc
