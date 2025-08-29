@@ -1,15 +1,205 @@
 import "./styles/DOM.css"
-import { makeProject, makeToDo } from "./appLogic.js";
-import Project from "./project.js";
 
-function Dom(title){
+
+function Dom(title, app){
     let apptitle = title;
-//create forms
-    // const createFormforProject = () => {
-    //     let form = document.createElement('form');
-    //     form.className = "projectForm";
-    // }
 
+    const StartProject = (sidediv) => {
+        let parent = document.querySelector('.parentDiv');
+        step1(parent, sidediv);
+
+        
+    }
+    const step1 = (parent, sidediv) => {
+        let form = document.createElement('form');
+        form.className = "projectForm";
+        parent.appendChild(form);
+
+        let label = document.createElement('label');
+        label.textContent = "Name: ";
+        let input = document.createElement('input');
+        input.type = "text";
+        form.appendChild(label);
+        label.appendChild(input);
+
+        let submitButton = document.createElement('button');
+        submitButton.className = "prjSubmButton";
+        form.appendChild(submitButton);
+        submitButton.textContent = "ok";
+
+        submitButton.addEventListener('click', function(event){
+            event.preventDefault();
+            form.style.display = "none";
+            let inputValue = input.value;
+            step2(inputValue)
+            
+            
+        })
+    }
+
+    const step2 = (inputvalue) => {
+        
+
+        let project = app.createNewProject(inputvalue);
+        let projectsList = app.getProjects();
+        let projDOMlist = document.querySelector('.ProjlistDiv');
+        //clean all projects 
+        projDOMlist.innerHTML = "";
+
+        for(let i = 0; i < projectsList.length; i++){
+            let div = document.createElement('div');
+            div.className = "projectDiv";
+            div.textContent = projectsList[i].Name;
+            projDOMlist.appendChild(div);
+            let project = projectsList[i];
+            
+            
+            div.addEventListener('click', function(){
+                step3(project);
+            })
+        }
+
+        
+        
+    }
+
+    const step3 = (project) => {
+        let tasks = project.tasks;
+        console.log(tasks);
+        let taskdiv = document.querySelector('.taskdiv');
+        let heading = document.querySelector('.projheading');
+        heading.textContent = project.Name;
+        taskdiv.innerHTML = "";
+        for(let i = 0; i < tasks.length; i++){
+            
+            let todo = document.createElement("div");
+            todo.className = "todo";
+            taskdiv.appendChild(todo);
+
+            //title
+            let title = document.createElement('div');
+            title.textContent = "Title: " + tasks[i].Title;
+            todo.appendChild(title);
+            //desc
+            let description = document.createElement('div');
+            description.textContent ="Description: " + tasks[i].Desc;
+            todo.appendChild(description);
+            //dueDate
+            let duedate = document.createElement('div');
+            duedate.textContent = "dueDate: " + tasks[i].due_date;
+            todo.appendChild(duedate);
+            //priority
+            let priority = document.createElement('div');
+            priority.textContent = "Priority: "+ tasks[i].Priority;
+            todo.appendChild(priority);
+
+            
+        }//i think i press once and it runs it for both
+        let addTaskButton = document.querySelector('.task-button');
+            addTaskButton.addEventListener('click', function(){
+                step4(project)
+            })
+
+    }
+
+    const step4 = (project) => {
+        let parent = document.querySelector('.parentDiv');
+        
+        let form = document.createElement('form');
+        form.className = "taskForm";
+        parent.appendChild(form);
+        console.log(project)
+
+        //title
+        let ptitle = document.createElement('p');
+        ptitle.className = "taskformPara";
+        let titleLabel = document.createElement('label');
+        titleLabel.textContent = "Title: ";
+        titleLabel.className = "tasklabels titleLabel";
+        titleLabel.htmlFor = "titleinpt"
+        let titleInput = document.createElement('input');
+        titleInput.type = "text";
+        titleInput.name = "titleinput";
+        titleInput.id = "titleinpt";
+        titleInput.className = "input";
+        titleLabel.appendChild(titleInput);
+        ptitle.appendChild(titleLabel);
+        form.appendChild(ptitle);
+        //description
+        let descP = document.createElement('p');
+        descP.className = "taskformPara descP";
+        let DescLabel = document.createElement('label');
+        DescLabel.textContent = "Description: ";
+        DescLabel.className = "tasklabels descLabel";
+        DescLabel.htmlFor = "descinpt"
+        let DescInput = document.createElement('textarea');
+        DescInput.id = "descinpt";
+        DescInput.className = "input";
+        // DescLabel.appendChild(DescInput);
+        descP.appendChild(DescLabel);
+        descP.appendChild(DescInput);
+        form.appendChild(descP);
+        //dueDate
+        let DateP = document.createElement('p');
+        DateP.className = "taskformPara";
+        let dateLabel = document.createElement('label');
+        dateLabel.textContent = "DueDate: ";
+        dateLabel.className = "taskLabels duedateLabel";
+        dateLabel.htmlFor = "dueDateInput";
+        let dueDateInput = document.createElement('input');
+        dueDateInput.type = "date";
+        dueDateInput.name = "duedateinput";
+        dueDateInput.id = "dueDateInput";
+        dueDateInput.className = "input";
+        dateLabel.appendChild(dueDateInput);
+        DateP.appendChild(dateLabel);
+        form.appendChild(DateP);;
+        //priority
+        let priorityP = document.createElement('p');
+        priorityP.className = "taskformPara";
+        let priorityLabel = document.createElement('label');
+        priorityLabel.textContent = "Priority: ";
+        priorityLabel.className = "tasklabels priorityLabel";
+        priorityLabel.htmlFor = "priorityinput";
+        let priorityInput = document.createElement('input');
+        priorityInput.type = "checkbox";
+        priorityInput.name = "priorityinput";
+        priorityInput.id = "priorityinput";
+        priorityInput.className = "input";
+        priorityLabel.appendChild(priorityInput);
+        priorityP.appendChild(priorityLabel);
+        form.appendChild(priorityP);
+
+        //submit button
+        let submitButton = document.createElement('button');
+        let buttonDiv = document.createElement('div');
+        buttonDiv.className = "taskSubmitDiv";
+        submitButton.className = "submitTaskButton";
+        submitButton.textContent = "Ok";
+        buttonDiv.appendChild(submitButton);
+        form.appendChild(buttonDiv);
+
+        
+        submitButton.addEventListener('click', function(event){
+            let title = titleInput.value;
+            let desc = DescInput.value;
+            let due_date = dueDateInput.value;
+            let priority = priorityInput.value;
+            form.remove();
+            step5(project, title, desc, due_date, priority);
+            event.preventDefault();
+        })
+
+    }
+
+    const step5 = (project, title, description, duedate, priority) => {
+        project.createTask(title, description, duedate, priority);
+        step3(project);
+    }
+    
+
+
+//##########################################################################################
     const createParent =() => {
         let parent = document.createElement('div');
         parent.className = "parentDiv";
@@ -17,35 +207,7 @@ function Dom(title){
         return parent;
     }
 
-    const createTask = (title, description, duedate, priority, maindiv) => {
-        let task = makeToDo(title, description, duedate, priority);
-        let todo = document.createElement('div');
-        todo.className = "todo";
-        //set inner things
-        maindiv.appendChild(todo);
-    }
 
-    const createProject = (Sidediv) => {
-        //create form and take name
-        let project = makeProject("P1");
-        let projectDiv = document.createElement('div');
-        projectDiv.className = "projectDiv";
-        projectDiv.textContent = project.Name;
-        Sidediv.appendChild(projectDiv);
-        projectDiv.addEventListener("click", function(){
-            let heading = document.querySelector('.projheading');
-            heading.textContent = project.Name;
-            let taskbutton = document.querySelector('.task-button');
-            taskbutton.addEventListener('click', function(){
-                //create task form
-                let maindiv = document.querySelector('.taskdiv');
-                createTask("Temp", "temp", "temp", "temp", maindiv);
-            })
-
-        })
-
-
-    }
 
     const createMainBar = (parent) => {
         //main div
@@ -68,6 +230,7 @@ function Dom(title){
          button.className = "task-button";
          button.textContent = "+";
          div.appendChild(button);
+         return div;
     }
 
     const createSideBar = (parent, title)=>{
@@ -80,15 +243,21 @@ function Dom(title){
         Title.textContent = title;
         div.appendChild(Title);
 
+        let prioritizedTaskDiv = document.createElement('div');
+        prioritizedTaskDiv.className = "PriorityHeadDiv";
+        div.appendChild(prioritizedTaskDiv);
+        prioritizedTaskDiv.textContent = "Priority";
+
+        
+
         //create Project add button
         let addProjectButton = document.createElement('button');
         addProjectButton.className = "addProjButton";
         addProjectButton.textContent = "New Project";
         div.appendChild(addProjectButton);
         
-        addProjectButton.addEventListener("click", function(){
-            createProject(div)
-        });
+        return div;
+        
     }
 
     
@@ -100,6 +269,22 @@ function Dom(title){
         let parent = createParent();
         let sidebar = createSideBar(parent, apptitle);
         let main = createMainBar(parent);
+
+        let prioritizedTaskDiv = document.querySelector('.PriorityHeadDiv');
+        prioritizedTaskDiv.addEventListener('click', function(){
+            console.log('clicked');
+        })
+
+        let addProjectButton = document.querySelector('.addProjButton');
+        addProjectButton.addEventListener("click", function(){
+            StartProject(sidebar);//passing sidediv
+            
+        });
+
+        let projectsListDiv = document.createElement('div');
+        projectsListDiv.className = "ProjlistDiv";
+        sidebar.appendChild(projectsListDiv);
+
     }
     return {MainFactory};
 }

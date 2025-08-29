@@ -7,8 +7,10 @@ export default class Project{
         this.name = name;
         this.id = id;
     }
-    createTask(task){
+    createTask(title, desc, duedate, priority){
+        let task = new Task(title, desc, duedate, priority,this.tasksCount);
         this.tasks.push(task);
+        this.tasksCount++;
     }
     get Tasks(){
         return this.tasks;

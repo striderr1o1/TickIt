@@ -1,5 +1,7 @@
 import dom from "./dom.js"
+import App from "./applogic2";
 
-let domm = dom("Dont TickIT");
+let ToDoApp = App();
+let domm = dom("Dont TickIT", ToDoApp);
 domm.MainFactory();
 

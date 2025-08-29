@@ -2,17 +2,16 @@ import Project from "./project.js"
 import Task from "./task.js"
 
 
-function App(){
+export default function App(){
 let projects = []
 let completed_projects = []
 let priority_tasks = []
-let projectIDs = 0;
+let projectCount = projects.length
 
 const createNewProject = (Name) => {
-    let id = projectIDs;
+    let id = projectCount;
     let newProject = new Project(Name, id);
     projects.push(newProject)
-    projectIDs++;
     return newProject;
 }
 
@@ -28,9 +27,7 @@ const deleteProject = (project) => {
 }
 
 const createTask = (project, title, description, duedate, priority) => {
-    let id = project.tasksCount
-    let task = new Task(title, description, duedate, priority, id)
-    project.createTask(task);
+    project.createTask(title, description, duedate,priority);
 }
 
 const PrioritizeTask = (project, id) => {
@@ -38,6 +35,10 @@ const PrioritizeTask = (project, id) => {
     priority_tasks.push(task)
 
 }
+const getProjects = () =>{
+    return projects;
+}
+
 
 
 
@@ -45,13 +46,8 @@ const display = () => {
     console.log(projects);
     console.log(completed_projects)
     console.log(priority_tasks)
+    
 }
-return {createNewProject, completeProject, display, createTask, deleteProject, PrioritizeTask}
+return {createNewProject, completeProject, display, createTask, deleteProject, PrioritizeTask, getProjects}
 }
 
-let app = App();
-let project = app.createNewProject("P1");
-app.completeProject(project)
-
-app.createTask(project, "A", "B", "2025", "Imp")
-app.display()
