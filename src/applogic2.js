@@ -7,11 +7,13 @@ let projects = []
 let completed_projects = []
 let priority_tasks = []
 let projectCount = projects.length
+let active;
 
 const createNewProject = (Name) => {
     let id = projectCount;
     let newProject = new Project(Name, id);
     projects.push(newProject)
+    projectCount = projects.length;
     return newProject;
 }
 
@@ -39,7 +41,16 @@ const getProjects = () =>{
     return projects;
 }
 
+const getSpecificProject = (id) =>{
+    return projects[id];
+}
 
+const setActive = (id) =>{
+     active = getSpecificProject(id);
+}
+const getActive = () => {
+    return active;
+}
 
 
 const display = () => {
@@ -48,6 +59,8 @@ const display = () => {
     console.log(priority_tasks)
     
 }
-return {createNewProject, completeProject, display, createTask, deleteProject, PrioritizeTask, getProjects}
+
+
+return {createNewProject,setActive,getActive,getSpecificProject, completeProject, display, createTask, deleteProject, PrioritizeTask, getProjects}
 }
 

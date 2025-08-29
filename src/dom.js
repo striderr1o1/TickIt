@@ -4,6 +4,40 @@ import "./styles/DOM.css"
 function Dom(title, app){
     let apptitle = title;
 
+    const loadTasks = (project) =>{
+        let tasks = project.tasks;
+        
+        let taskdiv = document.querySelector('.taskdiv');
+        let heading = document.querySelector('.projheading');
+        heading.textContent = project.Name;
+        taskdiv.innerHTML = "";
+        for(let i = 0; i < tasks.length; i++){
+            
+            let todo = document.createElement("div");
+            todo.className = "todo";
+            taskdiv.appendChild(todo);
+
+            //title
+            let title = document.createElement('div');
+            title.textContent = "Title: " + tasks[i].Title;
+            todo.appendChild(title);
+            //desc
+            let description = document.createElement('div');
+            description.textContent ="Description: " + tasks[i].Desc;
+            todo.appendChild(description);
+            //dueDate
+            let duedate = document.createElement('div');
+            duedate.textContent = "dueDate: " + tasks[i].due_date;
+            todo.appendChild(duedate);
+            //priority
+            let priority = document.createElement('div');
+            priority.textContent = "Priority: "+ tasks[i].Priority;
+            todo.appendChild(priority);
+
+            
+        }
+    }
+
     const StartProject = (sidediv) => {
         let parent = document.querySelector('.parentDiv');
         step1(parent, sidediv);
@@ -48,6 +82,8 @@ function Dom(title, app){
 
         for(let i = 0; i < projectsList.length; i++){
             let div = document.createElement('div');
+            div.dataset.indexNumber = i;
+            
             div.className = "projectDiv";
             div.textContent = projectsList[i].Name;
             projDOMlist.appendChild(div);
@@ -55,7 +91,10 @@ function Dom(title, app){
             
             
             div.addEventListener('click', function(){
-                step3(project);
+                let id = div.dataset.indexNumber;
+                console.log(id);
+                app.setActive(id);
+                step3(app.getActive());
             })
         }
 
@@ -64,40 +103,11 @@ function Dom(title, app){
     }
 
     const step3 = (project) => {
-        let tasks = project.tasks;
-        console.log(tasks);
-        let taskdiv = document.querySelector('.taskdiv');
-        let heading = document.querySelector('.projheading');
-        heading.textContent = project.Name;
-        taskdiv.innerHTML = "";
-        for(let i = 0; i < tasks.length; i++){
-            
-            let todo = document.createElement("div");
-            todo.className = "todo";
-            taskdiv.appendChild(todo);
-
-            //title
-            let title = document.createElement('div');
-            title.textContent = "Title: " + tasks[i].Title;
-            todo.appendChild(title);
-            //desc
-            let description = document.createElement('div');
-            description.textContent ="Description: " + tasks[i].Desc;
-            todo.appendChild(description);
-            //dueDate
-            let duedate = document.createElement('div');
-            duedate.textContent = "dueDate: " + tasks[i].due_date;
-            todo.appendChild(duedate);
-            //priority
-            let priority = document.createElement('div');
-            priority.textContent = "Priority: "+ tasks[i].Priority;
-            todo.appendChild(priority);
-
-            
-        }//i think i press once and it runs it for both
+        loadTasks(project)
+        
         let addTaskButton = document.querySelector('.task-button');
             addTaskButton.addEventListener('click', function(){
-                step4(project)
+                step4(app.getActive())
             })
 
     }
@@ -105,10 +115,18 @@ function Dom(title, app){
     const step4 = (project) => {
         let parent = document.querySelector('.parentDiv');
         
+        //removing all existing forms
+        let allforms = document.getElementsByClassName('taskForm');
+        console.log("Forms: " + allforms)
+        for(let i = 0; i < allforms.length; i++){
+            allforms[i].remove();
+            console.log("removing " + allforms[i])
+        }
+        //creating forms
         let form = document.createElement('form');
         form.className = "taskForm";
         parent.appendChild(form);
-        console.log(project)
+        
 
         //title
         let ptitle = document.createElement('p');
@@ -185,7 +203,7 @@ function Dom(title, app){
             let desc = DescInput.value;
             let due_date = dueDateInput.value;
             let priority = priorityInput.value;
-            form.remove();
+            allforms[allforms.length-1].remove();
             step5(project, title, desc, due_date, priority);
             event.preventDefault();
         })
@@ -194,7 +212,7 @@ function Dom(title, app){
 
     const step5 = (project, title, description, duedate, priority) => {
         project.createTask(title, description, duedate, priority);
-        step3(project);
+        loadTasks(project);
     }
     
 
