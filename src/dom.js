@@ -4,7 +4,7 @@ import "./styles/DOM.css"
 function Dom(title, app){
     let apptitle = title;
 
-    const loadTasks = (project) =>{
+    const loadTasks = (project) =>{//this function code is being used in a function that is used below
         let tasks = project.tasks;
         
         let taskdiv = document.querySelector('.taskdiv');
@@ -17,23 +17,93 @@ function Dom(title, app){
             todo.className = "todo";
             taskdiv.appendChild(todo);
 
-            //title
+            
             let title = document.createElement('div');
             title.textContent = "Title: " + tasks[i].Title;
+            title.className = "TodoChild TodoTitle"
             todo.appendChild(title);
-            //desc
-            let description = document.createElement('div');
-            description.textContent ="Description: " + tasks[i].Desc;
-            todo.appendChild(description);
-            //dueDate
+            
             let duedate = document.createElement('div');
             duedate.textContent = "dueDate: " + tasks[i].due_date;
+            duedate.className = "TodoChild TodoDate"
             todo.appendChild(duedate);
             //priority
             let priority = document.createElement('div');
             priority.textContent = "Priority: "+ tasks[i].Priority;
+            priority.className = "TodoChild TodoPriority"
             todo.appendChild(priority);
 
+            todo.addEventListener('click', function(){
+                let parent = document.querySelector('.parentDiv');
+                let div = document.createElement('div');
+                div.className = "TodoDetails";
+                parent.appendChild(div);
+                //title
+                let titleDiv = document.createElement('div');
+                titleDiv.className = "todoDetailChild";
+                let titleLabel = document.createElement('p');
+                titleLabel.textContent = "Title: ";
+                let title = document.createElement('input');
+                title.value = tasks[i].Title;
+                titleDiv.appendChild(titleLabel);
+                titleDiv.appendChild(title);
+                div.append(titleDiv);
+                //description
+                let descDiv = document.createElement('div');
+                descDiv.className = "todoDetailChild";
+                let DescLabel = document.createElement('p');
+                DescLabel.textContent = "Description: ";
+                let desc = document.createElement('input');
+                desc.value = tasks[i].Desc;
+                descDiv.appendChild(DescLabel);
+                descDiv.appendChild(desc);
+                div.append(descDiv);
+                //duedate
+                let DateDiv = document.createElement('div');
+                DateDiv.className = "todoDetailChild";
+                let DateLabel = document.createElement('p');
+                DateLabel.textContent = "DueDate: ";
+                let date = document.createElement('input');
+                date.value = tasks[i].due_date;
+                date.type = "date";
+                DateDiv.appendChild(DateLabel);
+                DateDiv.appendChild(date);
+                div.append(DateDiv);
+                //priority
+                let priorityDiv = document.createElement('div');
+                priorityDiv.className = "todoDetailChild";
+                let PriorityLabel = document.createElement('p');
+                PriorityLabel.textContent = "Priority: ";
+                let priority = document.createElement('input');
+                priority.type = "checkbox";
+                priority.checked = tasks[i].Priority;
+                priorityDiv.appendChild(PriorityLabel);
+                priorityDiv.appendChild(priority);
+                div.append(priorityDiv);
+                //button div
+                let ButtonDiv = document.createElement('div');
+                ButtonDiv.className = "todo-detail-button";
+                let Button = document.createElement('button');
+                Button.className = "todo-button";
+                Button.textContent = "Ok";
+                ButtonDiv.appendChild(Button);
+                div.appendChild(ButtonDiv);
+
+                Button.addEventListener('click', function(){
+                    div.remove();
+                    let Title = title.value;
+                    let description = desc.value;
+                    let due_date = date.value;
+                    let Priority = priority.checked;
+                    
+                    tasks[i].Title = Title;
+                    tasks[i].Desc = description;
+                    tasks[i].due_date = due_date;
+                    tasks[i].Priority = Priority;
+                    loadTasks(project);
+                })
+
+            })
             
         }
     }
@@ -202,7 +272,7 @@ function Dom(title, app){
             let title = titleInput.value;
             let desc = DescInput.value;
             let due_date = dueDateInput.value;
-            let priority = priorityInput.value;
+            let priority = priorityInput.checked;
             allforms[allforms.length-1].remove();
             step5(project, title, desc, due_date, priority);
             event.preventDefault();
@@ -310,3 +380,4 @@ function Dom(title, app){
 export default Dom;
 
 //need to add delete, complete, prioritize, local storage etc
+//onclick, open task details

@@ -13,7 +13,7 @@ html{
     grid-column-end: 2;
     grid-row-start: 1;
     /* grid-row-end: ; */
-    background-color:rgb(0, 0, 137);
+    background-color:rgb(61, 61, 61);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -30,7 +30,7 @@ html{
     width: 100%;
     color: white;
     
-    background-color:rgb(0, 0, 137);
+    background-color:rgb(61, 61, 61);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -42,7 +42,7 @@ html{
     height: 40px;
     width: 100%;
     color: white;
-    background-color:rgb(0, 0, 82);
+    background-color:rgb(35, 35, 35);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -52,10 +52,10 @@ html{
 }
 .addProjButton{
     margin-top: 20px;
-    color: black;
+    color: rgb(255, 255, 255);
     font-size: 1rem;
     border-radius: 20px;
-    background-color: white;
+    background-color: rgb(222, 8, 8);
     padding: 10px 20px 10px 20px;
 
 }
@@ -76,11 +76,11 @@ html{
     height: 30px;
     min-height: 30px;
     width: 96%;
-    background-color: grey;
-    border-radius: 20px;
+    background-color: rgb(255, 255, 255);
+    border-radius: 10px;
     border-color: grey;
     margin-top: 20px;
-    color: white;
+    color: rgb(0, 0, 0);
     display: flex;
     flex-direction: row;
     justify-content: center;
@@ -93,9 +93,12 @@ html{
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    font-family: monospace;
+
 }
 .projheading{
     color: white;
+    font-size: 2rem;
 }
 .taskdiv{
     height: 400px;
@@ -113,22 +116,33 @@ html{
 .todo{
     height: 50px;
     width: 96%;
-    background-color: rgb(0, 0, 0);
-    margin: 20px;
+    background-color: rgb(32, 32, 32);
+    margin: 10px;
     min-height: 50px;
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: space-between;
     align-items: center;
     color: white;
+    border-radius: 10px;
+    font-size: 1rem;
+}
+.TodoTitle{
+    margin-left: 20px;
+}
+.TodoDate{
+    margin-left: 200px;
+}
+.TodoPriority{
+    margin-right: 10px;
 }
 .task-button{
     margin-top: 30px;
-    background-color: blue;
+    background-color: rgb(255, 43, 43);
     font-size: 3rem;
     padding: 0 30px 5px 30px;
     color: white;
-    border-color: blue;
+    border-color:rgb(255, 43, 43) ;
     border-radius: 20px; 
 }
 .projectForm{
@@ -175,5 +189,39 @@ html{
     align-items: center;
 }
 .submitTaskButton{
+    
     padding: 0 5px 0 5px;
+}
+.TodoDetails{
+    height: auto;
+    min-height: 400px;
+    width: 300px;
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-left: 600px;
+    margin-top: 100px;
+    
+    position: fixed;
+}
+.todoDetailChild{
+    width: 100%;
+}
+.todoDetailChild p{
+    margin-left: 10px;
+}
+.todoDetailChild input{
+    margin-left: 40px;
+}
+.todo-detail-button{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+.todo-button{
+    height: 30px;
+    width: 60px;
 }
