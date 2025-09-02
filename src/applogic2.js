@@ -24,11 +24,7 @@ const completeProject = (project) => {
     projects.splice(projectID, 1);
 }
 
-const completeTask = (project, taskID) => {
-    let task = project.getSpecificTask(taskID);
-    completed_tasks.push(task);
-    project.removeTask(id);
-}
+
 
 const deleteProject = (project) => {
     let projectID = project.id;

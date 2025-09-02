@@ -30,28 +30,26 @@ function Dom(title, app){
             //priority
             let priority = document.createElement('div');
             priority.textContent = "Priority: "+ tasks[i].Priority;
-            priority.className = "TodoChild TodoPriority"
+            priority.className = "TodoChild TodoPriority";
             todo.appendChild(priority);
+            
             //complete and delete
             let CompNDeleteDiv = document.createElement('div');
             CompNDeleteDiv.className = "complete-del-div";
             todo.appendChild(CompNDeleteDiv);
 
-            let CompleteButton = document.createElement('button');
-            CompleteButton.className = "complete-button";
-            CompleteButton.textContent = "complete";
-            CompNDeleteDiv.appendChild(CompleteButton);
+            
             
             let DelButton = document.createElement('button');
             DelButton.className = "del-button";
             DelButton.textContent = "delete";
             CompNDeleteDiv.appendChild(DelButton);
 
-            CompleteButton.addEventListener('click', function(event){
-                    event.stopImmediatePropagation();
-                    //add to completed task functionality here...
-                    
-                })
+            DelButton.addEventListener('click', function(event){
+                event.stopPropagation();
+                project.removeTask(i);
+                loadTasks(project)
+            })
             
 
 
@@ -298,6 +296,8 @@ function Dom(title, app){
             let desc = DescInput.value;
             let due_date = dueDateInput.value;
             let priority = priorityInput.checked;
+
+            
             allforms[allforms.length-1].remove();
             step5(project, title, desc, due_date, priority);
             event.preventDefault();
@@ -306,6 +306,7 @@ function Dom(title, app){
     }
 
     const step5 = (project, title, description, duedate, priority) => {
+        
         project.createTask(title, description, duedate, priority);
         loadTasks(project);
     }
@@ -356,10 +357,10 @@ function Dom(title, app){
         Title.textContent = title;
         div.appendChild(Title);
 
-        let prioritizedTaskDiv = document.createElement('div');
-        prioritizedTaskDiv.className = "PriorityHeadDiv";
-        div.appendChild(prioritizedTaskDiv);
-        prioritizedTaskDiv.textContent = "Priority";
+        // let prioritizedTaskDiv = document.createElement('div');
+        // prioritizedTaskDiv.className = "PriorityHeadDiv";
+        // div.appendChild(prioritizedTaskDiv);
+        // prioritizedTaskDiv.textContent = "Priority";
 
         
 
@@ -383,10 +384,10 @@ function Dom(title, app){
         let sidebar = createSideBar(parent, apptitle);
         let main = createMainBar(parent);
 
-        let prioritizedTaskDiv = document.querySelector('.PriorityHeadDiv');
-        prioritizedTaskDiv.addEventListener('click', function(){
-            console.log('clicked');
-        })
+        // let prioritizedTaskDiv = document.querySelector('.PriorityHeadDiv');
+        // prioritizedTaskDiv.addEventListener('click', function(){
+        //     console.log('clicked');
+        // })
 
         let addProjectButton = document.querySelector('.addProjButton');
         addProjectButton.addEventListener("click", function(){
