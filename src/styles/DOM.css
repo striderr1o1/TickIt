@@ -225,3 +225,22 @@ html{
     height: 30px;
     width: 60px;
 }
+.complete-del-div{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    margin-right: 20px;
+}
+.complete-button{
+    height: 80%;
+    width: 80px;
+    background-color: rgb(7, 111, 7);
+    margin-right: 10px;
+}
+.del-button{
+    height: 80%;
+    width: 60px;
+    background-color: rgb(193, 9, 9);
+
+}

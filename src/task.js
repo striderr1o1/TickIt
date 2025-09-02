@@ -34,5 +34,11 @@ export default class Task{
     set Priority(p){
         this.priority = p;
     }
+    // get id(){
+    //     return this.id;
+    // }
+    // set id(ID){
+    //     this.id = ID;
+    // }
 }
 

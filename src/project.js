@@ -12,6 +12,9 @@ export default class Project{
         this.tasks.push(task);
         this.tasksCount++;
     }
+    removeTask(id){
+        this.tasks.splice(id, 1);
+    }
     get Tasks(){
         return this.tasks;
     }

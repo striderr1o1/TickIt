@@ -7,6 +7,7 @@ let projects = []
 let completed_projects = []
 let priority_tasks = []
 let projectCount = projects.length
+let completed_tasks = []
 let active;
 
 const createNewProject = (Name) => {
@@ -21,6 +22,12 @@ const completeProject = (project) => {
     completed_projects.push(project);
     let projectID = project.id;
     projects.splice(projectID, 1);
+}
+
+const completeTask = (project, taskID) => {
+    let task = project.getSpecificTask(taskID);
+    completed_tasks.push(task);
+    project.removeTask(id);
 }
 
 const deleteProject = (project) => {

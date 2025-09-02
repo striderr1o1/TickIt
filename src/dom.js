@@ -32,8 +32,30 @@ function Dom(title, app){
             priority.textContent = "Priority: "+ tasks[i].Priority;
             priority.className = "TodoChild TodoPriority"
             todo.appendChild(priority);
+            //complete and delete
+            let CompNDeleteDiv = document.createElement('div');
+            CompNDeleteDiv.className = "complete-del-div";
+            todo.appendChild(CompNDeleteDiv);
 
-            todo.addEventListener('click', function(){
+            let CompleteButton = document.createElement('button');
+            CompleteButton.className = "complete-button";
+            CompleteButton.textContent = "complete";
+            CompNDeleteDiv.appendChild(CompleteButton);
+            
+            let DelButton = document.createElement('button');
+            DelButton.className = "del-button";
+            DelButton.textContent = "delete";
+            CompNDeleteDiv.appendChild(DelButton);
+
+            CompleteButton.addEventListener('click', function(event){
+                    event.stopImmediatePropagation();
+                    //add to completed task functionality here...
+                    
+                })
+            
+
+
+            todo.addEventListener('click', function(event){
                 let parent = document.querySelector('.parentDiv');
                 let div = document.createElement('div');
                 div.className = "TodoDetails";
@@ -88,6 +110,9 @@ function Dom(title, app){
                 Button.textContent = "Ok";
                 ButtonDiv.appendChild(Button);
                 div.appendChild(ButtonDiv);
+
+                //its calling outer event
+                
 
                 Button.addEventListener('click', function(){
                     div.remove();
@@ -380,4 +405,3 @@ function Dom(title, app){
 export default Dom;
 
 //need to add delete, complete, prioritize, local storage etc
-//onclick, open task details
